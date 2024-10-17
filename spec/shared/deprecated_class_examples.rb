@@ -4,13 +4,13 @@ RSpec.shared_examples 'deprecated class' do
   subject { deprecated_class.new }
 
   around do |example|
-    old_deprec_behavior = ActiveSupport::Deprecation.behavior
-    ActiveSupport::Deprecation.behavior = :raise
+    old_deprec_behavior = Grape.deprecator.behavior
+    Grape.deprecator.behavior = :raise
     example.run
-    ActiveSupport::Deprecation.behavior = old_deprec_behavior
+    Grape.deprecator.behavior = old_deprec_behavior
   end
 
-  it 'raises an ActiveSupport::DeprecationException' do
-    expect { subject }.to raise_error(ActiveSupport::DeprecationException)
+  it 'raises an Grape.deprecatorException' do
+    expect { subject }.to raise_error(Grape.deprecatorException)
   end
 end
